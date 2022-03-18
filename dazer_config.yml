@@ -1,0 +1,11 @@
+vocab_num: 80000
+emb_size: 300
+train_class_num: 20
+kernel_width: 5
+kernel_num: 50
+maxpooling_num: 3
+decoder_mlp1_num: 75
+decoder_mlp2_num: 1
+regular_term: 0.01
+adv_term: 0.2
+max_len: 256
