@@ -38,7 +38,7 @@ class DAZER_Training_Dataset(Dataset):
 
             
     def __getitem__(self, index):
-        return self.l_q[index], self.l_d[index], self.l_d_aux[index], self.l_q_str[index], self.y[index]
+        return self.l_q[index], self.l_d[index], self.l_d_aux[index], self.l_q_index[index], self.l_y[index]
                   
 
     def __len__(self):
@@ -55,16 +55,16 @@ class DAZER_Test_Dataset(Dataset):
             
         for line in datas:
             cols = line.strip().split('\t')
-            y = float(relevent)
+            y = float(relevency)
             q_str = cols[0]
             q = np.array([int(t) for t in cols[0].split(',') if int(t) < self.vocab_size])
             t1 = np.array([int(t) for t in cols[1].split(',') if int(t) < self.vocab_size])
 
             #padding
-            v_q = np.array([self.vocab_size-1 for i in self.max_q_len])
-            v_d = np.array([self.vocab_size-1 for i in self.max_q_len])
-            v_q[:min(q.shape[0], self.max_q_len)] = q[:min(q.shape[0], self.max_q_len)]
-            v_d[:min(t1.shape[0], self.max_d_len)] = t1[:min(t1.shape[0], self.max_d_len)]
+            v_q = np.array([vocab_size-1 for i in range(max_q_len)])
+            v_d = np.array([vocab_size-1 for i in range(max_d_len)])
+            v_q[:min(q.shape[0], max_q_len)] = q[:min(q.shape[0], max_q_len)]
+            v_d[:min(t1.shape[0], max_d_len)] = t1[:min(t1.shape[0], max_d_len)]
 
             self.l_q.append(v_q)
             self.l_d.append(v_d)
@@ -72,7 +72,7 @@ class DAZER_Test_Dataset(Dataset):
 
             
     def __getitem__(self, index):
-        return self.l_q[index], self.l_d[index], self.y[index]
+        return self.l_q[index], self.l_d[index], self.l_y[index]
                   
 
     def __len__(self):
